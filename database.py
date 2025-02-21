@@ -4,7 +4,7 @@ DB_NAME = "tasks.db"
 
 def init_db():
   conn = sqlite3.connect(DB_NAME)
-  cursor = conn.cursor
+  cursor = conn.cursor()
 
   cursor.execute("""
   CREATE TABLE IF NOT EXISTS tasks (
@@ -21,7 +21,7 @@ def init_db():
 def get_db_connection():
   """Creates and returns a connection"""
   conn = sqlite3.connect(DB_NAME)
-  cursor = conn.cursor
+  cursor = conn.cursor()
   return conn, cursor
 
 def add_task(task):
@@ -33,6 +33,19 @@ def add_task(task):
 def get_tasks():
   conn, cursor = get_db_connection()
   cursor.execute("SELECT * FROM tasks")
+  tasks = cursor.fetchall()
+  conn.close()
+  return tasks
+
+def update_task(task_id, new_task_text):
+  conn, cursor = get_db_connection()
+  cursor.execute("UPDATE tasks SET task = ? WHERE id = ?", (new_task_text, task_id,))
+  conn.commit()
+  conn.close()
+
+def delete_task(task_id):
+  conn, cursor = get_db_connection()
+  cursor.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
   conn.commit()
   conn.close()
 
