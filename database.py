@@ -32,7 +32,7 @@ def add_task(task):
 
 def get_tasks():
   conn, cursor = get_db_connection()
-  cursor.execute("SELECT * FROM tasks")
+  cursor.execute("SELECT * FROM tasks ORDER BY rowid ASC")
   tasks = cursor.fetchall()
   conn.close()
   return tasks
@@ -49,8 +49,11 @@ def delete_task(task_id):
   conn.commit()
   conn.close()
 
-def mark_completed(task_id):
+def toggle_completed(task_id):
   conn, cursor = get_db_connection()
-  cursor.execute("UPDATE tasks SET completed = 1 WHERE id = ?", (task_id))
+  cursor.execute("SELECT completed FROM tasks WHERE id = ?", (task_id,))
+  current_status = cursor.fetchone()[0]
+  new_status = 0 if current_status else 1
+  cursor.execute("UPDATE tasks SET completed = ? WHERE id = ?", (new_status, task_id))
   conn.commit()
   conn.close()
