@@ -56,3 +56,18 @@ taskpy/
 ### 📝 Notes
 Task numbering is visual only and does not modify database IDs.
 The app runs locally without needing an internet connection.
+
+## 🔧 Creating an Executable (.exe)
+
+To generate a standalone `.exe` file, install **PyInstaller**:
+
+```sh
+pip install pyinstaller
+```
+Then run the following command:
+```sh
+pyinstaller --onefile --windowed app.py
+```
+--onefile → Bundles everything into a single .exe
+--windowed → Hides the terminal window when running the app
+The .exe file will be created inside the dist/ directory.

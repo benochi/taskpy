@@ -1,4 +1,14 @@
+# Ignore the virtual environment
 venv/
 *.db
+# Ignore Python compiled files
 __pycache__/
-*__
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Ignore build artifacts
+/dist
+/build
+*.spec
+venv/Lib/site-packages/pip/_internal/__pycache__/build_env.cpython-312.pyc
